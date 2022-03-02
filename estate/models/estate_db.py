@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
 
 
@@ -58,6 +59,25 @@ class TestModel(models.Model):
     tag_ids = fields.Many2many("estate.property.tag")
     offer_ids = fields.One2many("estate.property.offer", "property_id")
 
+    _sql_constraints = [
+        (
+            'check_expected_price',
+            'CHECK(expected_price > 0 )',
+            'Expected Price must be greater than 0'
+        ),
+        (
+            'check_selling_price',
+            'CHECK(selling_price > 0 )',
+            'Selling Price must be greater than 0'
+        ),
+    ]
+
+    @api.constrains('selling_price')
+    def _check_selling_price(self):
+        for record in self:
+            if record.selling_price < 0.9*record.expected_price:
+                raise ValidationError(r"selling price should be greater than 90% Expected Price")
+
     @api.depends("living_area", "garden_area")
     def _compute_total_area(self):
         for record in self:
@@ -111,6 +131,14 @@ class TestModel2(models.Model):
 
     name = fields.Char(required=True)
 
+    _sql_constraints = [
+        (
+            'check_name',
+            'UNIQUE(name)',
+            'Name must be unique'
+        ),
+    ]
+
 
 class TestModel3(models.Model):
     _name = "estate.property.buyer"
@@ -132,6 +160,14 @@ class TestModel5(models.Model):
 
     name = fields.Char(required=True)
 
+    _sql_constraints = [
+        (
+            'check_name',
+            'UNIQUE(name)',
+            'tag already exist'
+        ),
+    ]
+
 
 class TestModel6(models.Model):
     _name = "estate.property.offer"
@@ -150,6 +186,14 @@ class TestModel6(models.Model):
         inverse="_inverse_date_deadline",
         readonly=False
     )
+
+    _sql_constraints = [
+        (
+            'check_price',
+            'CHECK(price > 0 )',
+            'Offer Price must be greater than 0'
+        ),
+    ]
 
     @api.depends("validity")
     def _compute_date_deadline(self):

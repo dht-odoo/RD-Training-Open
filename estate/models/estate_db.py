@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 from dateutil.relativedelta import relativedelta
 
 
@@ -14,12 +14,14 @@ class TestModel(models.Model):
     )
     expected_price = fields.Float(required=True)
     selling_price = fields.Float(readonly=True)
+    best_price = fields.Float(compute="_compute_best_price")
     bedrooms = fields.Integer(default=2)
     living_area = fields.Integer()
     facades = fields.Integer()
     garage = fields.Boolean()
     garden = fields.Boolean()
     garden_area = fields.Integer()
+    total_area = fields.Float(compute="_compute_total_area")
     garden_orientation = fields.Selection(
         string='Type',
         selection=[
@@ -55,6 +57,17 @@ class TestModel(models.Model):
     )
     tag_ids = fields.Many2many("estate.property.tag")
     offer_ids = fields.One2many("estate.property.offer", "property_id")
+
+    @api.depends("living_area", "garden_area")
+    def _compute_total_area(self):
+        for record in self:
+            record.total_area = record.living_area + record.garden_area
+
+    @api.depends("offer_ids")
+    def _compute_best_price(self):
+        for record in self:
+            for offers in record.offer_ids:
+                record.best_price = max(record.offer_ids)
 
 
 class TestModel2(models.Model):

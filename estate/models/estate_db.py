@@ -82,6 +82,28 @@ class TestModel(models.Model):
             self.garden_area = 0
             self.garden_orientation = ''
 
+    def action_cancel(self):
+        for record in self:
+            if record.state != "Sold":
+                record.state = "Canceled"
+                return True
+            return {
+                'effect': {
+                    'fadeout': 'fast',
+                    'message': "Sold Property cannot be Canceled",
+                }}
+
+    def action_sold(self):
+        for record in self:
+            if record.state != "Canceled":
+                record.state = "Sold"
+                return True
+            return {
+                'effect': {
+                    'fadeout': 'fast',
+                    'message': "Canceled Property cannot be Sold",
+                }}
+
 
 class TestModel2(models.Model):
     _name = "estate.property.type"
@@ -120,7 +142,7 @@ class TestModel6(models.Model):
         string='Status',
         selection=[('Accepted', 'Accepted'), ('Refused', 'Refused')]
     )
-    partner_id = fields.Many2one("res.partner", required=True)
+    partner_id = fields.Many2one("estate.property.buyer", required=True)
     property_id = fields.Many2one("estate.property", required=True)
     validity = fields.Integer(default=7)
     date_deadline = fields.Date(
@@ -139,3 +161,13 @@ class TestModel6(models.Model):
     def _inverse_date_deadline(self):
         for record in self:
             record.validity = record.date_deadline.day - fields.Date.today().day
+
+    def action_confirm(self):
+        for record in self:
+            record.status = "Accepted"
+            record.property_id.selling_price = self.price
+            record.property_id.property_buyer_id.name = record.partner_id.name
+
+    def action_refused(self):
+        for record in self:
+            record.status = "Refused"

@@ -23,7 +23,7 @@ class TestModel(models.Model):
     garden_area = fields.Integer()
     total_area = fields.Float(compute="_compute_total_area")
     garden_orientation = fields.Selection(
-        string='Type',
+        string='Garden Orientation',
         selection=[
             ('north', 'North'),
             ('south', 'South'),
@@ -72,6 +72,15 @@ class TestModel(models.Model):
                     max_price = offer.price
             else:
                 self.best_price = max_price
+
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        if self.garden:
+            self.garden_area = 7
+            self.garden_orientation = 'south'
+        else:
+            self.garden_area = 0
+            self.garden_orientation = ''
 
 
 class TestModel2(models.Model):

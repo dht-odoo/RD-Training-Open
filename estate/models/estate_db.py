@@ -65,9 +65,13 @@ class TestModel(models.Model):
 
     @api.depends("offer_ids")
     def _compute_best_price(self):
+        max_price = 0
         for record in self:
-            for offers in record.offer_ids:
-                record.best_price = max(record.offer_ids)
+            for offer in record.offer_ids:
+                if offer.price >= max_price:
+                    max_price = offer.price
+            else:
+                self.best_price = max_price
 
 
 class TestModel2(models.Model):

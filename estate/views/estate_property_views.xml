@@ -58,15 +58,16 @@
         <field name="name">Real Estate</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
+            <tree string="Channel" editable="top">
                 <field name="name" string="Title" />
+                <field name="property_type_id" string="Property Type"/>
                 <field name="postcode" />
-                <field name="bedrooms" />
+                <field name="tag_ids"  string="Tags" widget="many2many_tags" options="{'color_field': 'color'}"  />
+                <field name="bedrooms" string="Bedrooms" />
                 <field name="living_area" string="Living Area (sqm)" />
                 <field name="expected_price" />
                 <field name="selling_price" />
                 <field name="date_availability" string="Available From" />
-                <field name="tag_ids" string="Tags" />
             </tree>
         </field>
     </record>

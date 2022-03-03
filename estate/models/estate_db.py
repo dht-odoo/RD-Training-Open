@@ -211,6 +211,7 @@ class TestModel6(models.Model):
     def action_confirm(self):
         for record in self:
             record.status = "Accepted"
+            record.property_id.state = "Offer Accepted"
             record.property_id.selling_price = self.price
             record.property_id.property_buyer_id = record.partner_id
 

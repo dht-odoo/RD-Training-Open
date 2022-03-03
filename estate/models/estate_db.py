@@ -166,6 +166,7 @@ class TestModel5(models.Model):
     _description = "test model5"
 
     name = fields.Char(required=True)
+    color = fields.Integer()
 
     _sql_constraints = [
         (

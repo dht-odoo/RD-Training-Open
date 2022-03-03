@@ -73,6 +73,8 @@ class TestModel(models.Model):
         ),
     ]
 
+    _order = "id desc"
+
     @api.constrains('selling_price')
     def _check_selling_price(self):
         for record in self:
@@ -141,6 +143,8 @@ class TestModel2(models.Model):
         ),
     ]
 
+    _order = "name"
+
 
 class TestModel3(models.Model):
     _name = "estate.property.buyer"
@@ -170,6 +174,8 @@ class TestModel5(models.Model):
         ),
     ]
 
+    _order = "name"
+
 
 class TestModel6(models.Model):
     _name = "estate.property.offer"
@@ -196,6 +202,8 @@ class TestModel6(models.Model):
             'Offer Price must be greater than 0'
         ),
     ]
+
+    _order = "price desc"
 
     @api.depends("validity")
     def _compute_date_deadline(self):

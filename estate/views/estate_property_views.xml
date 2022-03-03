@@ -58,7 +58,7 @@
         <field name="name">Real Estate</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Channel" >
+            <tree string="Channel" decoration-success="state=='Offer Received' or state=='Offer Accepted'" decoration-bf="state=='Offer Accepted'" decoration-muted="state=='Sold'">
                 <field name="name" string="Title" />
                 <field name="property_type_id" string="Property Type"/>
                 <field name="postcode" />
@@ -68,6 +68,8 @@
                 <field name="expected_price" />
                 <field name="selling_price" />
                 <field name="date_availability" string="Available From" optional="hide"/>
+                <field name="state" string="State" optional="hide" />
+
             </tree>
         </field>
     </record>
@@ -123,14 +125,14 @@
                         <page string="Offers" >
                             <!-- <field name="offer_ids" attrs="{'readonly': [('state', '!=', False)]}"> -->
                             <field name="offer_ids">
-                                <tree string="Tree String" editable="top">
+                                <tree string="Tree String" editable="top" decoration-danger="status=='Refused'" decoration-success="status=='Accepted'">
                                     <field name="price" />
                                     <field name="partner_id" />
                                     <field name="validity" />
                                     <field name="date_deadline" />
                                     <button name="action_confirm" type="object" icon="fa-check" attrs="{'invisible': [('status', '!=', False)]}"/>
                                     <button name="action_refused" type="object" icon="fa-times" attrs="{'invisible': [('status', '!=', False)]}"/>
-                                    <field name="status" />
+                                    <field name="status" optional="hide"/>
                                 </tree>
                             </field>
                         </page>

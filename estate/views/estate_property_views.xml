@@ -58,7 +58,7 @@
         <field name="name">Real Estate</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Channel" editable="top">
+            <tree string="Channel" >
                 <field name="name" string="Title" />
                 <field name="property_type_id" string="Property Type"/>
                 <field name="postcode" />
@@ -67,7 +67,7 @@
                 <field name="living_area" string="Living Area (sqm)" />
                 <field name="expected_price" />
                 <field name="selling_price" />
-                <field name="date_availability" string="Available From" />
+                <field name="date_availability" string="Available From" optional="hide"/>
             </tree>
         </field>
     </record>
@@ -121,8 +121,9 @@
                         </page>
 
                         <page string="Offers" >
-                            <field name="offer_ids" attrs="{'readonly': [('state', '!=', False)]}">
-                                <tree string="Tree String">
+                            <!-- <field name="offer_ids" attrs="{'readonly': [('state', '!=', False)]}"> -->
+                            <field name="offer_ids">
+                                <tree string="Tree String" editable="top">
                                     <field name="price" />
                                     <field name="partner_id" />
                                     <field name="validity" />

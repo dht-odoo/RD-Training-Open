@@ -4,6 +4,7 @@
         <field name="name">Real Estate</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_altaf': True}</field>
     </record>
 
     <record id="estate_property_type_action" model="ir.actions.act_window">
@@ -160,7 +161,8 @@
                 <field name="living_area" />
                 <field name="facades" />
                 <separator />
-                <filter string="Available" name="state"
+                <field name="living_area" string="Greater Than or Equal Living Area"
+                filter_domain="['|', ('living_area', '>', self), ('living_area', '=', self)]"/>                <filter string="Available" name="state"
                     domain="['|', ('state', '=', 'New'), ('state', '=', 'Offer Received')]" />
                 <group>
                     <filter string="Postcode" name="postcode" context="{'group_by':'postcode'}" />

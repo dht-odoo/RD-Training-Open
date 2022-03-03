@@ -134,6 +134,7 @@ class TestModel2(models.Model):
 
     name = fields.Char(required=True)
     property_type_ids = fields.One2many("estate.property", "property_type_id")
+    Sequence = fields.Integer()
 
     _sql_constraints = [
         (

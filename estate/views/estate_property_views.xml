@@ -9,8 +9,37 @@
     <record id="estate_property_type_action" model="ir.actions.act_window">
         <field name="name">Property Types</field>
         <field name="res_model">estate.property.type</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form</field>        
     </record>
+
+    <record id="estate_property_type_view_form" model="ir.ui.view">
+        <field name="name">Property Types</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Channel">
+                <sheet>
+                    <group>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </group>
+                    <notebook>
+                        <page string="Properties">
+                            <field name="property_type_ids" context="{'default_category_id': active_id}">
+                                <tree string="Tree String">
+                                    <field name="name" string="Title"/>
+                                    <field name="expected_price"/>
+                                    <field name="state" string="Status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
 
     <record id="estate_property_view_tree" model="ir.ui.view">
         <field name="name">Real Estate</field>

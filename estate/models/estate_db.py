@@ -42,6 +42,7 @@ class TestModel(models.Model):
             ('Sold', 'Sold'),
             ('Canceled', 'Canceled')
         ],
+        default="New",
     )
     property_type_id = fields.Many2one(
         "estate.property.type",
@@ -130,6 +131,7 @@ class TestModel2(models.Model):
     _description = "test model2"
 
     name = fields.Char(required=True)
+    property_type_ids = fields.One2many("estate.property", "property_type_id")
 
     _sql_constraints = [
         (
@@ -210,7 +212,7 @@ class TestModel6(models.Model):
         for record in self:
             record.status = "Accepted"
             record.property_id.selling_price = self.price
-            record.property_id.property_buyer_id.name = record.partner_id.name
+            record.property_id.property_buyer_id = record.partner_id
 
     def action_refused(self):
         for record in self:

@@ -54,7 +54,7 @@ class TestModel(models.Model):
     )
     property_seller_id = fields.Many2one(
         "res.users",
-        string="partner",
+        string="salesman",
         default=lambda self: self.env.user
     )
     tag_ids = fields.Many2many("estate.property.tag")
@@ -78,8 +78,8 @@ class TestModel(models.Model):
     @api.constrains('selling_price')
     def _check_selling_price(self):
         for record in self:
-            if record.selling_price < 0.9*record.expected_price:
-                raise ValidationError(r"selling price should be greater than 90% Expected Price")
+            if record.selling_price < 0.9 * record.expected_price:
+                raise ValidationError(r"sp should be greater than 90% Expected Price")
 
     @api.depends("living_area", "garden_area")
     def _compute_total_area(self):
@@ -254,3 +254,12 @@ class TestModel6(models.Model):
     def action_refused(self):
         for record in self:
             record.status = "Refused"
+
+
+class ResUsers(models.Model):
+    _inherit = "res.users"
+    property_ids = fields.One2many(
+        "estate.property", "property_seller_id",
+        string="Properties",
+        domain=[("state", "in", ["New", "Offer Received"])]
+    )

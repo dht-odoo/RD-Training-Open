@@ -1,5 +1,5 @@
 from odoo import fields, models, api
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from dateutil.relativedelta import relativedelta
 
 
@@ -126,6 +126,11 @@ class TestModel(models.Model):
                     'fadeout': 'fast',
                     'message': "Canceled Property cannot be Sold",
                 }}
+
+    def unlink(self):
+        if self.state not in ["New", "Canceled"]:
+            raise UserError("Only new and canceled properties can be deleted.")
+        return super().unlink()
 
 
 class TestModel2(models.Model):

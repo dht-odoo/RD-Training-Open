@@ -106,26 +106,14 @@ class EstateProperty(models.Model):
             self.garden_orientation = ''
 
     def action_cancel(self):
-        for record in self:
-            if record.state != "Sold":
-                record.state = "Canceled"
-                return True
-            return {
-                'effect': {
-                    'fadeout': 'fast',
-                    'message': "Sold Property cannot be Canceled",
-                }}
+        if "sold" in self.mapped("state"):
+            raise UserError("Sold properties cannot be canceled.")
+        return self.write({"state": "Canceled"})
 
     def action_sold(self):
-        for record in self:
-            if record.state != "Canceled":
-                record.state = "Sold"
-                return True
-            return {
-                'effect': {
-                    'fadeout': 'fast',
-                    'message': "Canceled Property cannot be Sold",
-                }}
+        if "canceled" in self.mapped("state"):
+            raise UserError("Canceled properties cannot be sold.")
+        return self.write({"state": "Sold"})
 
     def unlink(self):
         if self.state not in ["New", "Canceled"]:

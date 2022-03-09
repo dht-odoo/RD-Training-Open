@@ -23,9 +23,6 @@ class EstatePropertyType(models.Model):
 
     _order = "name"
 
-    def action_count_offer(self):
-        pass
-
     def _compute_offer(self):
         # will have to check once again
         data = self.env["estate.property.offer"].read_group(

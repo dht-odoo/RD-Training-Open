@@ -24,7 +24,7 @@
             <form string="Channel">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="action_count_offer" type="object" class="oe_stat_button" icon="fa-money">
+                        <button name="%(estate.estate_property_offer_action)d" type="action" class="oe_stat_button" icon="fa-money">
                             <field name="offer_count" widget="statinfo" string="Offers" />
                         </button>
                     </div>

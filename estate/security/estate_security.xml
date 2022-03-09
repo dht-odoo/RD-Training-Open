@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_estate"  model="ir.module.category">
+        <field name="name">Real Estate</field>
+        <field name="sequence">45</field>
+    </record>
+
+    <record id="estate_group_manager" model="res.groups">
+        <field name="name">estt group mgr</field>
+        <field name="category_id" ref="module_category_estate"></field>
+    </record>
+
+    <!-- <record id="estate_category"  model="ir.module.category">
+        <field name="name">Test</field>
+    </record>
+
+    <record id="group_estate" model="res.groups">
+        <field name="name">Tax display B2B</field>
+        <field name="category_id" ref="estate.estate_category"/>
+    </record>
+
+    <record id="group_estate_2" model="res.groups">
+        <field name="name">Tax 1display B2B</field>
+        <field name="category_id" ref="estate.estate_category"/>
+        <field name="implied_ids" eval="[(4, ref('estate.group_estate'))]"/>
+    </record> -->
+
+
+</odoo>

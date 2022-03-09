@@ -14,4 +14,3 @@ class EstatePropertyReport(models.AbstractModel):
             'doc_model': 'estate.property',
             'records_data': records_data,
         }
-        

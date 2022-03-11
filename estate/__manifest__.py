@@ -3,6 +3,7 @@
     'license': 'LGPL-3',
     'depends': [
         'base',
+        'website',
     ],
     'data': [
         'security/estate_security.xml',
@@ -15,6 +16,8 @@
         'wizard/esate_property_wizard_view.xml',
         'report/estate_property_templates.xml',
         'report/estate_property_reports.xml',
+        'views/templates.xml',
+        'data/website_data.xml',
     ],
     'application': True,
     'installable': True,

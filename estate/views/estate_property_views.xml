@@ -76,6 +76,7 @@
                 </header>
                 <sheet>
                     <group>
+                        <field name="image" class="oe_avatar" widget="image" />
                         <h1>
                             <field name="name" />
                         </h1>

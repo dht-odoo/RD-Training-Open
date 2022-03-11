@@ -1,0 +1,39 @@
+<odoo>
+
+    <template id="index">
+        <t t-call="website.layout">
+            <title>Home</title>
+            <div>
+                <center>
+                    <h1>This is Home Page</h1>
+                </center>
+            </div>
+        </t>
+    </template>
+
+    <template id="properties">
+        <t t-call="website.layout">
+            <title>Properties</title>
+
+            <div class="container d-flex justify-content-center m-5">
+                <div class="row">
+                    <t t-foreach="properties" t-as="property">
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                                    <div t-field="property.image" t-options="{'widget' : 'image'}" width="100%" class="card-img-top" />                               <div class="card-body">
+                                    <p class="card-text">
+                                        <strong>
+                                            <t t-esc="property.name"/>
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                        </div>  
+                    </t>
+                </div>
+            </div>
+
+        </t>
+    </template>
+</odoo>

@@ -60,6 +60,7 @@ class EstateProperty(models.Model):
     company_id = fields.Many2one('res.company')
     tag_ids = fields.Many2many("estate.property.tag")
     offer_ids = fields.One2many("estate.property.offer", "property_id")
+    image = fields.Image()
 
     _sql_constraints = [
         (

@@ -34,6 +34,11 @@
                 </div>
             </div>
 
+            <div class="products_pager form-inline justify-content-center m-5">
+                <t t-call="website.pager">
+                </t>
+            </div>
+
         </t>
     </template>
 </odoo>

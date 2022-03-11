@@ -12,16 +12,30 @@ class Estate(http.Controller):
 
         # getting page number if available
         page = kwargs.get('page', 1)
-        
+
+        # number of record per page
+        limit = 4
 
         # filtering : "state" in [sold, cancelled]
         domain = [('state', 'not in', ['Sold', 'Cancelled'])                ]
         properties = http.request.env['estate.property']
-        # print("*"*100)
+
+        # total number of record
+        total_records = properties.sudo().search_count(domain,)
+
+        # createing pager
+        pager = http.request.website.pager(url='/estate/properties', total=total_records, page=page, step=limit)
+
+        # offset
+        offset = pager['offset']
+        properties = properties[offset: offset + limit]
 
         # data to send in frontend side
         data = {
-            "properties": properties.search( domain, limit=4 )
+            "properties": properties.search(domain, limit=limit, offset=offset),
+            "pager": pager
         }
         response = http.request.render('estate.properties', data)
+
+        # print("*"*100)
         return response

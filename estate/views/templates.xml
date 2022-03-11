@@ -20,16 +20,19 @@
                     <t t-foreach="properties" t-as="property">
                         <div class="col">
                             <div class="card" style="width: 18rem;">
-                                    <div t-field="property.image" t-options="{'widget' : 'image'}" width="100%" class="card-img-top" />                               <div class="card-body">
+                                <div t-field="property.image" t-options="{'widget' : 'image'}" width="100%"
+                                    class="card-img-top" />
+                                <div class="card-body">
                                     <p class="card-text">
                                         <strong>
-                                            <t t-esc="property.name"/>
+                                            <a t-att-href="'/estate/property/%s' %property.id">
+                                                <t t-esc="property.name" /></a>
                                         </strong>
                                     </p>
                                 </div>
                             </div>
-                            
-                        </div>  
+
+                        </div>
                     </t>
                 </div>
             </div>
@@ -41,4 +44,63 @@
 
         </t>
     </template>
+
+
+    <template id="object">
+        <t t-call="website.layout">
+            <title>Detail View</title>
+
+
+            <div class="card m-5">
+                <div class="row no-gutters">
+                    <div class="col-md-8">
+                        <div t-field="property.image" t-options="{'widget' : 'image'}" width="100%"
+                            class="card-img-top" />
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-body">
+                            <h5 class="card-title h1">
+                                <t t-out="property.name" />
+                            </h5>
+                            <p class="card-text">
+                                
+                                <table class="table table-borderless">
+                                    <tbody>
+                                      <tr>
+                                        <th scope="row">Bedrooms:</th>
+                                        <td><t t-out="property.bedrooms"/></td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Living Area:</th>
+                                        <td><t t-out="property.living_area"/></td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Expected Price:</th>
+                                        <td><t t-out="property.expected_price"/></td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Best Price:</th>
+                                        <td><t t-out="property.best_price"/></td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">Post Code:</th>
+                                        <td><t t-out="property.postcode"/></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h6>Description: </h6>
+                    <p class="card-text"><t t-out="property.description"/></p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
 </odoo>
+
+<!-- make properties title as anchor tag -->

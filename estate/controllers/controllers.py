@@ -37,3 +37,11 @@ class Estate(http.Controller):
 
         # print("*"*100)
         return response
+
+    @http.route('/estate/property/<model("estate.property"):name>', auth='public', website=True)
+    def property_view_form(self, name):
+        data = {
+            "property": name
+        }
+        response = http.request.render('estate.object', data)
+        return response

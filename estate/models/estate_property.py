@@ -61,6 +61,7 @@ class EstateProperty(models.Model):
     tag_ids = fields.Many2many("estate.property.tag")
     offer_ids = fields.One2many("estate.property.offer", "property_id")
     image = fields.Image()
+    is_published = fields.Boolean()
 
     _sql_constraints = [
         (

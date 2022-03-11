@@ -10,7 +10,6 @@ class Estate(http.Controller):
     @http.route(['/estate/properties', '/estate/properties/page/<int:page>'], auth='public', website=True)
     def property_view(self, page=1, **kwarg):
 
-
         # number of record per page
         limit = 4
 
@@ -18,10 +17,14 @@ class Estate(http.Controller):
         domain = [('state', 'not in', ['Sold', 'Cancelled'])                ]
         properties = http.request.env['estate.property']
 
-        #applying filteration based on date, if available
+        # applying filteration based on date, if available
         date = kwarg.get('date')
         if date:
             domain.append(('create_date', '>=', date))
+
+        # filtering : if user is admin or not
+        if http.request.env.user.has_group('base.group_portal'):
+            domain.append(('is_published', '=', 'True'))
 
         # total number of record
         total_records = properties.sudo().search_count(domain,)

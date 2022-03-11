@@ -23,8 +23,8 @@
                         <input type="date" name="date" class="form-control" required="required"/>
                     </div>
                     <div t-attf-class="clearfix oe_login_buttons text-center ">
-                        <button type="submit" class="btn btn-white">
-                            🔍
+                        <button type="submit" class="btn btn-outline-dark">
+                            Listed After ⧩ 
                         </button>
                     </div>
                 </form>

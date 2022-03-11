@@ -15,6 +15,21 @@
         <t t-call="website.layout">
             <title>Properties</title>
 
+
+            <div class="container d-flex justify-content-end mt-2 mr-2">
+                <form method="POST" action="/estate/properties" class="row">
+                    <div class="form-group ">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="date" name="date" class="form-control" required="required"/>
+                    </div>
+                    <div t-attf-class="clearfix oe_login_buttons text-center ">
+                        <button type="submit" class="btn btn-white">
+                            🔍
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <div class="container d-flex justify-content-center m-5">
                 <div class="row">
                     <t t-foreach="properties" t-as="property">

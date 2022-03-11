@@ -8,7 +8,7 @@ class Estate(http.Controller):
         return http.request.render('estate.index')
 
     @http.route(['/estate/properties', '/estate/properties/page/<int:page>'], auth='public', website=True)
-    def property_view(self, page=1):
+    def property_view(self, page=1, **kwarg):
 
 
         # number of record per page
@@ -17,6 +17,11 @@ class Estate(http.Controller):
         # filtering : "state" in [sold, cancelled]
         domain = [('state', 'not in', ['Sold', 'Cancelled'])                ]
         properties = http.request.env['estate.property']
+
+        #applying filteration based on date, if available
+        date = kwarg.get('date')
+        if date:
+            domain.append(('create_date', '>=', date))
 
         # total number of record
         total_records = properties.sudo().search_count(domain,)
@@ -30,7 +35,7 @@ class Estate(http.Controller):
 
         # data to send in frontend side
         data = {
-            "properties": properties.search(domain, limit=limit, offset=offset),
+            "properties": properties.search(domain, limit=limit, offset=offset, order="create_date desc"),
             "pager": pager
         }
         response = http.request.render('estate.properties', data)

@@ -4,14 +4,12 @@ from odoo import http
 
 class Estate(http.Controller):
     @http.route('/estate', auth='public', website=True)
-    def index(self, **kw):
+    def index(self):
         return http.request.render('estate.index')
 
-    @http.route('/estate/properties', auth='public', website=True)
-    def property_view(self, **kwargs):
+    @http.route(['/estate/properties', '/estate/properties/page/<int:page>'], auth='public', website=True)
+    def property_view(self, page=1):
 
-        # getting page number if available
-        page = kwargs.get('page', 1)
 
         # number of record per page
         limit = 4
